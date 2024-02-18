@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: AppColorsTextDark.primary),
                   ),
                   Text(
-                    '19',
+                    '${(state.main.temp! - 273.15).floor()} °C',
                     style: AppTextStyle.regular(
                         fontSize: screenWidth(context) / 7,
                         color: AppColorsTextDark.primary),
@@ -47,28 +47,30 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'H:24',
+                        ('H : ${(state.main.tempMax! - 273.15).floor()} °C'),
                         style: AppTextStyle.semiBold(
                             fontSize: screenWidth(context) / 19,
                             color: AppColorsTextDark.primary),
                       ),
                       SizedBox(width: screenWidth(context) / 25),
                       Text(
-                        'L:18',
+                        ('L : ${(state.main.tempMin! - 273.15).floor()} °C'),
                         style: AppTextStyle.semiBold(
                             fontSize: screenWidth(context) / 19,
                             color: AppColorsTextDark.primary),
                       ),
+                      Image.network(
+                          'https://openweathermap.org/img/wn/${state.weather[0].icon}.png')
                     ],
                   ),
-                  SizedBox(height: screenWidth(context) / 10),
+                  SizedBox(height: screenWidth(context) / 70),
                   Image.asset(AppImages.house),
                 ],
               ),
             ),
           );
         } else if (state is CurrentWeatherInitial) {
-          return Center(child: const CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else {
           return const Text('Erorrrrrrrrrrrr');
         }

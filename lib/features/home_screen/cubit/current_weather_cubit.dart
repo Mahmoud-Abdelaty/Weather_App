@@ -30,8 +30,11 @@ class CurrentWeatherCubit extends Cubit<CurrentWeatherState> {
       for (var data in weatherData) {
         weatherList.add(Weather.fromJson(data));
       }
+
       print(jsonData);
-      emit(CurrentWeatherGetSuccess(weatherList));
+      print("ddddd $mainData");
+
+      emit(CurrentWeatherGetSuccess(weatherList, Main.fromJson(mainData)));
     } catch (e) {
       emit(CurrentWeatherGetError(e.toString()));
     }

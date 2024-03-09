@@ -22,8 +22,8 @@ class SearchScreen extends StatelessWidget {
             ),
             Text(
               'Location',
-              style: AppTextStyle.black(
-                color: AppColorsTextDark.primary,
+              style: AppTextStyle.bold(
+                color: AppColors.white,
               ),
             ),
           ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTextStyle {
-  static const String _fontFamily = "ProtestRevolution";
+  static const String _fontFamily = "AlegreyaSans";
 
   static TextStyle thin({Color? color, double? fontSize}) => TextStyle(
         fontFamily: _fontFamily,
@@ -11,13 +11,6 @@ class AppTextStyle {
       );
 
   static TextStyle light({Color? color, double? fontSize}) => TextStyle(
-        fontFamily: _fontFamily,
-        fontSize: fontSize,
-        fontWeight: FontWeight.w200,
-        color: color,
-      );
-
-  static TextStyle ultralight({Color? color, double? fontSize}) => TextStyle(
         fontFamily: _fontFamily,
         fontSize: fontSize,
         fontWeight: FontWeight.w300,
@@ -38,13 +31,6 @@ class AppTextStyle {
         fontSize: fontSize,
       );
 
-  static TextStyle semiBold({Color? color, double? fontSize}) => TextStyle(
-        fontFamily: _fontFamily,
-        fontWeight: FontWeight.w600,
-        color: color,
-        fontSize: fontSize,
-      );
-
   static TextStyle bold({Color? color, double? fontSize}) => TextStyle(
         fontFamily: _fontFamily,
         fontSize: fontSize,
@@ -52,7 +38,7 @@ class AppTextStyle {
         color: color,
       );
 
-  static TextStyle heavy({Color? color, double? fontSize}) => TextStyle(
+  static TextStyle extraBold({Color? color, double? fontSize}) => TextStyle(
         fontFamily: _fontFamily,
         fontSize: fontSize,
         fontWeight: FontWeight.w800,

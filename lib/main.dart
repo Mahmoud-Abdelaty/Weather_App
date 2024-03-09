@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather_app/app/cubit/app_layout_cubit.dart';
 import 'package:weather_app/app/screens/app_layout_screen.dart';
 import 'package:weather_app/features/home_screen/cubit/current_weather_cubit.dart';
@@ -24,10 +25,17 @@ class MyApp extends StatelessWidget {
               CurrentWeatherCubit()..getCurrentLocationAndWeather(),
         ),
       ],
-      child: const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Weather App',
-        home: AppLayoutScreen(),
+      child: ScreenUtilInit(
+        designSize: const Size(360, 690),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (_, child) {
+          return const MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Weather App',
+            home: AppLayoutScreen(),
+          );
+        },
       ),
     );
   }

@@ -19,6 +19,8 @@ class CurrentWeatherCubit extends Cubit<CurrentWeatherState> {
       String latitude = position.latitude.toString();
       String longitude = position.longitude.toString();
 
+      print(longitude);
+      print(latitude);
       var response = await NetworkHelper.instance.get(
           endPoint: EndPoints.Current_Weather,
           params: {
@@ -28,10 +30,14 @@ class CurrentWeatherCubit extends Cubit<CurrentWeatherState> {
           });
       var jsonData = response.data;
       var mainData = jsonData["main"];
+      var sysData = jsonData["sys"];
       var weather = jsonData["weather"][0];
 
       emit(CurrentWeatherGetSuccess(
-          Weather.fromJson(weather), Main.fromJson(mainData)));
+          CurrentWeatherModel.fromJson(jsonData),
+          Weather.fromJson(weather),
+          Main.fromJson(mainData),
+          Sys.fromJson(sysData)));
     } catch (e) {
       emit(CurrentWeatherGetError(e.toString()));
     }

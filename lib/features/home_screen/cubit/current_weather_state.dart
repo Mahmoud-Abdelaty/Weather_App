@@ -18,9 +18,12 @@ class LocationGetError extends CurrentWeatherState {
 }
 
 class CurrentWeatherGetSuccess extends CurrentWeatherState {
+  final CurrentWeatherModel currentWeatherModel;
   final Weather weather;
   final Main main;
-  CurrentWeatherGetSuccess(this.weather, this.main);
+  final Sys sys;
+  CurrentWeatherGetSuccess(
+      this.currentWeatherModel, this.weather, this.main, this.sys);
 }
 
 class CurrentWeatherGetError extends CurrentWeatherState {

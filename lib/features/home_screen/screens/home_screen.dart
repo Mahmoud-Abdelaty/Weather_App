@@ -3,188 +3,89 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:weather_app/core/utils/app_colors.dart';
 import 'package:weather_app/core/utils/app_images.dart';
-import 'package:weather_app/core/utils/app_text_style.dart';
 import 'package:weather_app/features/home_screen/cubit/current_weather_cubit.dart';
+import 'package:weather_app/features/home_screen/screens/widgets/box_data_widget.dart';
+import 'package:weather_app/features/home_screen/screens/widgets/more_data_widget.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CurrentWeatherCubit, CurrentWeatherState>(
       builder: (context, state) {
         if (state is CurrentWeatherGetSuccess) {
-          return Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    AppColors.pinkBackground,
-                    AppColors.indigoBackground,
+          return Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      AppColors.pinkBackground,
+                      AppColors.indigoBackground,
+                    ],
+                  ),
+                ),
+                alignment: Alignment.center,
+                child: Stack(
+                  children: [
+                    BoxData(
+                      temperature: state.main.temp!,
+                      description: state.weather.description!,
+                      main: state.weather.main!,
+                      country:
+                          '${state.currentWeatherModel.name}, ${state.sys.country}',
+                      date: state.currentWeatherModel.dt!,
+                    ),
                   ],
                 ),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 400.h,
-                    width: 230.w,
-                    child: Stack(
-                      children: [
-                        Container(
-                          width: 230.w,
-                          height: 247.h,
-                          decoration: BoxDecoration(
-                            color: AppColors.containerData,
-                            borderRadius: BorderRadius.circular(30.r),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 18.w),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Los Angeles, CA, USA',
-                                  style: AppTextStyle.bold(
-                                    color: AppColors.brown,
-                                    fontSize: 20.sp,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 76.w,
-                                      height: 90.h,
-                                      child: RichText(
-                                        text: TextSpan(
-                                          children: [
-                                            TextSpan(
-                                              text: '15',
-                                              style: AppTextStyle.bold(
-                                                color: AppColors.brown,
-                                                fontSize: 64.sp,
-                                              ),
-                                            ),
-                                            WidgetSpan(
-                                              child: Transform.translate(
-                                                offset: const Offset(2, -23),
-                                                child: Text(
-                                                  '°C',
-                                                  style: AppTextStyle.medium(
-                                                    fontSize: 14.sp,
-                                                    color: AppColors.brown,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: ' Sunday, 11 am',
-                                              style: AppTextStyle.medium(
-                                                color: AppColors.brown
-                                                    .withOpacity(0.5),
-                                                fontSize: 14.sp,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 47.w),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
-                                      children: [
-                                        Container(
-                                          width: 72.w,
-                                          height: 16.h,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            color:
-                                                AppColors.pink.withOpacity(0.5),
-                                            borderRadius:
-                                                BorderRadius.circular(20.r),
-                                          ),
-                                          child: Text(
-                                            'Strong Winds',
-                                            style: AppTextStyle.medium(
-                                              color: AppColors.white,
-                                              fontSize: 10.sp,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 4.h),
-                                        Container(
-                                          width: 50.w,
-                                          height: 16.h,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                            color: AppColors.purple
-                                                .withOpacity(0.5),
-                                            borderRadius:
-                                                BorderRadius.circular(20.r),
-                                          ),
-                                          child: Text(
-                                            'Cloudy',
-                                            style: AppTextStyle.medium(
-                                              color: AppColors.white,
-                                              fontSize: 10.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: -150.h, // Adjust the top position as needed
-                          right: 0.w, // Adjust the right position as needed
-                          child: Image.asset(
-                            AppImages.moon,
-                            width: 221.w,
-                            height: 191.h,
-                            fit: BoxFit
-                                .cover, // Ensure the image covers the specified area
-                          ),
-                        ),
-                        Positioned(
-                          top: 225.h,
-                          left: 35.w,
-                          child: Container(
-                            width: 163.w,
-                            height: 47.h,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(18.r),
-                              color: AppColors.indigo,
-                            ),
-                            child: Text(
-                              'VIEW STATS',
-                              style: AppTextStyle.bold(
-                                color: AppColors.white,
-                                fontSize: 14.sp,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+              Positioned(
+                top: -10.h,
+                left: 0,
+                right: 0,
+                child: Image.asset(
+                  AppImages.moon,
+                  width: 299.w,
+                  height: 298.h,
+                ),
+              ),
+              Positioned(
+                bottom: 115.h,
+                left: 100.w,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const MoreDataWidget(
+                      image: AppImages.precipitation,
+                      type: 'Precipitation',
+                      data: '6%',
+                      paddingRight: 10,
+                      paddingLeft: 23,
                     ),
-                  ),
-                ],
-              ));
+                    MoreDataWidget(
+                      image: AppImages.humidity,
+                      type: 'Humidity',
+                      data: '${state.main.humidity}%',
+                      paddingRight: 24,
+                      paddingLeft: 16,
+                    ),
+                    MoreDataWidget(
+                      image: AppImages.wind,
+                      type: 'Wind',
+                      data: '${state.currentWeatherModel.wind!.speed} km/h',
+                      paddingRight: 29,
+                      paddingLeft: 17,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
         } else if (state is CurrentWeatherInitial) {
           return const Center(child: CircularProgressIndicator());
         } else {

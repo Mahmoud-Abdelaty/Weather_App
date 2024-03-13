@@ -5,16 +5,17 @@ import 'package:weather_app/core/utils/app_colors.dart';
 import 'package:weather_app/core/utils/app_text_style.dart';
 
 class BoxData extends StatelessWidget {
-  const BoxData(
-      {super.key,
-      required this.country,
-      required this.temperature,
-      required this.main,
-      required this.date,
-      required this.description});
+  const BoxData({
+    super.key,
+    required this.country,
+    required this.temperature,
+    required this.main,
+    required this.date,
+    required this.description,
+  });
 
   final String country;
-  final double temperature;
+  final num temperature;
   final int date;
   final String main;
   final String description;
@@ -47,48 +48,51 @@ class BoxData extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      SizedBox(
-                        width: 85.w,
-                        height: 90.h,
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text:
-                                    ((temperature - 273.15).floor()).toString(),
-                                style: AppTextStyle.bold(
-                                  color: AppColors.brown,
-                                  fontSize: 64.sp,
-                                ),
-                              ),
-                              WidgetSpan(
-                                child: Transform.translate(
-                                  offset: const Offset(2, -23),
-                                  child: Text(
-                                    '°C',
-                                    style: AppTextStyle.medium(
-                                      fontSize: 14.sp,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: ((temperature - 273.15).floor())
+                                        .toString(),
+                                    style: AppTextStyle.bold(
                                       color: AppColors.brown,
+                                      fontSize: 64.sp,
                                     ),
                                   ),
-                                ),
+                                  WidgetSpan(
+                                    child: Transform.translate(
+                                      offset: const Offset(2, -23),
+                                      child: Text(
+                                        '°C',
+                                        style: AppTextStyle.medium(
+                                          fontSize: 14.sp,
+                                          color: AppColors.brown,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              TextSpan(
-                                text: DateFormat('EEEE hh a')
-                                    .format(DateTime.fromMillisecondsSinceEpoch(
-                                        date * 1000))
-                                    .replaceAll('AM', 'am')
-                                    .replaceAll('PM', 'pm'),
-                                style: AppTextStyle.medium(
-                                  color: AppColors.brown.withOpacity(0.5),
-                                  fontSize: 14.sp,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
+                          Text(
+                            DateFormat('EEEE hh a')
+                                .format(DateTime.fromMillisecondsSinceEpoch(
+                                    date * 1000))
+                                .replaceAll('AM', 'am')
+                                .replaceAll('PM', 'pm'),
+                            style: AppTextStyle.medium(
+                              color: AppColors.brown.withOpacity(0.5),
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(width: 40.w),
+                      SizedBox(width: 20.w),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [

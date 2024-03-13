@@ -33,11 +33,7 @@ class CurrentWeatherCubit extends Cubit<CurrentWeatherState> {
       var sysData = jsonData["sys"];
       var weather = jsonData["weather"][0];
 
-      emit(CurrentWeatherGetSuccess(
-          CurrentWeatherModel.fromJson(jsonData),
-          Weather.fromJson(weather),
-          Main.fromJson(mainData),
-          Sys.fromJson(sysData)));
+      emit(CurrentWeatherGetSuccess(CurrentWeatherModel.fromJson(jsonData)));
     } catch (e) {
       emit(CurrentWeatherGetError(e.toString()));
     }

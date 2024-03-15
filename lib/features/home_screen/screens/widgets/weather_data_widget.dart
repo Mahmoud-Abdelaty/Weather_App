@@ -32,8 +32,8 @@ class WeatherData extends StatelessWidget {
     return Stack(
       children: [
         Positioned(
-          left: 65.w,
-          top: 220.h,
+          // left: 65.w,
+          // top: 220.h,
           child: BoxData(
             date: date,
             country: country,
@@ -46,16 +46,16 @@ class WeatherData extends StatelessWidget {
           top: 0,
           left: 0,
           right: 0,
-          child: Image.network(
-            'https://openweathermap.org/img/wn/$image.png',
-            width: 299.w,
-            height: 298.h,
-          ),
-          // child: Image.asset(
-          //   image,
+          // child: Image.network(
+          //   'https://openweathermap.org/img/wn/$image.png',
           //   width: 299.w,
           //   height: 298.h,
           // ),
+          child: Image.asset(
+            image,
+            width: 299.w,
+            height: 298.h,
+          ),
         ),
         Positioned(
             bottom: 115.h,

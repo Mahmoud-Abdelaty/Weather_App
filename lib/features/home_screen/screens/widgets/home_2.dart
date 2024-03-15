@@ -1,7 +1,6 @@
-import 'package:flutter/foundation.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gallery_3d/gallery3d.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/core/utils/app_colors.dart';
@@ -9,26 +8,8 @@ import 'package:weather_app/core/utils/app_images.dart';
 import 'package:weather_app/core/utils/app_text_style.dart';
 import 'package:weather_app/features/home_screen/cubit/current_weather_cubit.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  late Gallery3DController controller;
-  int itemCount = 3;
-  @override
-  void initState() {
-    controller = Gallery3DController(
-      itemCount: itemCount,
-      autoLoop: true,
-      ellipseHeight: 0,
-      minScale: 0.8,
-    );
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +21,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return BlocBuilder<CurrentWeatherCubit, CurrentWeatherState>(
       builder: (context, state) {
         if (state is CurrentWeatherGetSuccess) {
+          int itemCount = 3;
           return Container(
             width: double.infinity,
             height: double.infinity,
+            alignment: Alignment.center,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -53,35 +36,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            child: Gallery3D(
-                controller: controller,
-                itemConfig: GalleryItemConfig(
-                  height: 360.h,
-                  radius: 10.r,
-                ),
-                width: MediaQuery.of(context).size.width,
-                onItemChanged: (index) {},
-                onClickItem: (index) {
-                  if (kDebugMode) print("currentIndex:$index");
-                },
-                itemBuilder: (context, index) {
-                  return Stack(
+            child: CarouselSlider.builder(
+              itemCount: itemCount,
+              itemBuilder:
+                  (BuildContext context, int itemIndex, int pageViewIndex) {
+                return SizedBox(
+                  height: 380.h,
+                  width: 233.w,
+                  child: Stack(
                     children: [
                       Positioned(
-                        top: 110.h,
+                        top: 95.h,
                         left: 0,
                         right: 0,
                         child: Container(
-                          height: 225.h,
-                          width: 227.w,
+                          height: 230.h,
                           decoration: BoxDecoration(
                             color: AppColors.containerData,
                             borderRadius: BorderRadius.circular(30.r),
                           ),
                           child: Positioned(
-                            top: 0.h,
-                            right: 0,
-                            left: 0,
+                            top: 155.h,
                             child: Padding(
                               padding: EdgeInsets.only(left: 18.w),
                               child: Column(
@@ -89,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Los Angeles, CA, USA',
+                                    itemIndex.toString(),
                                     style: AppTextStyle.bold(
                                       color: AppColors.brown,
                                       fontSize: 20.sp,
@@ -197,39 +172,28 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Positioned(
-                        bottom: 140.h,
-                        right: -20.w,
-                        left: -20.w,
+                        bottom: 175.h,
+                        right: 0,
+                        left: 0,
                         child: Image.asset(
                           AppImages.moon,
                           width: 299.w,
                           height: 298.h,
                         ),
                       ),
-                      Positioned(
-                        top: 310.h,
-                        left: 30.w,
-                        right: 30.w,
-                        child: Container(
-                          width: 163.w,
-                          height: 47.h,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(18.r),
-                            color: AppColors.indigo,
-                          ),
-                          child: Text(
-                            'VIEW STATS',
-                            style: AppTextStyle.bold(
-                              color: AppColors.white,
-                              fontSize: 14.sp,
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
-                  );
-                }),
+                  ),
+                );
+              },
+              options: CarouselOptions(
+                height: double.infinity,
+                viewportFraction: itemCount > 1 && itemCount > 2 ? 0.6 : 0.9,
+                scrollPhysics:
+                    itemCount > 1 ? null : const NeverScrollableScrollPhysics(),
+                enlargeCenterPage: true,
+                enlargeStrategy: CenterPageEnlargeStrategy.zoom,
+              ),
+            ),
           );
         } else if (state is CurrentWeatherInitial) {
           return const Center(child: CircularProgressIndicator());
